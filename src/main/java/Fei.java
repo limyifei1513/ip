@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Fei {
 
     public void sayHi(){
@@ -8,11 +10,19 @@ public class Fei {
         System.out.println("Bye. Hope to see you again soon!");
     }
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         Fei fei = new Fei();
         fei.sayHi();
-        // while (true){
+        while (true){
+            String userInput = scanner.nextLine();
+            if (userInput.equals("bye")){
+                fei.sayBye();
+                break;
+            }
+            else{
+                System.out.println("You said: " + userInput);
+            }
             
-        // }
-        fei.sayBye();
+        }
     }
 }
