@@ -48,11 +48,41 @@ public class Fei {
                 System.out.println("    "+tasks.get(taskNumber -1).print());
             }
 
-            else{
-                tasks.add(new Task(userInput));
-                System.out.println("added: " + userInput);
+            else if (userInput.startsWith("todo ")){
+                String task = userInput.substring(5);
+                tasks.add(new Todo(task));
+                System.out.println("Got it. I've added this task:");
+                int size = tasks.size();
+                System.out.println("    "+tasks.get(size-1).print());
+                System.out.println("Now you have "+ size +" tasks in the list.");
             }
-            
+
+            else if (userInput.startsWith("deadline ")){
+                String task = userInput.substring(9);
+                String[] parts = task.split(" /by ");
+                tasks.add(new Deadline(parts[0],parts[1]));
+                System.out.println("Got it. I've added this task:");
+                int size = tasks.size();
+                System.out.println("    "+tasks.get(size-1).print());
+                System.out.println("Now you have "+ size +" tasks in the list.");
+            }
+
+            else if (userInput.startsWith("event ")){
+                String task = userInput.substring(6);
+                String[] parts = task.split(" /from ");
+                String[] from_to = parts[1].split(" /to ");
+                tasks.add(new Event(parts[0],from_to[0],from_to[1]));
+                System.out.println("Got it. I've added this task:");
+                int size = tasks.size();
+                System.out.println("    "+tasks.get(size-1).print());
+                System.out.println("Now you have "+ size +" tasks in the list.");
+            }
+
+            else{
+                System.out.println("error, please reinput the command");
+            }
+
+            System.out.println("");
         }
     }
 }
