@@ -58,6 +58,9 @@ public class Fei {
             else if (userInput.startsWith("mark ")){
                 try{
                     String[] parts = userInput.split(" ");
+                    if (parts.length < 2) {
+                        throw new FeiException("Must follow this format: \nmark <valid number>");
+                    }
                     int taskNumber = Integer.parseInt(parts[1]); 
                     validateMarkNumber(taskNumber, tasks);
                     tasks.get(taskNumber -1).mark();
@@ -76,11 +79,35 @@ public class Fei {
             else if (userInput.startsWith("unmark ")){
                 try {
                     String[] parts = userInput.split(" ");
+                    if (parts.length < 2) {
+                        throw new FeiException("Must follow this format: \nunmark <valid number>");
+                    }
                     int taskNumber = Integer.parseInt(parts[1]);
                     validateMarkNumber(taskNumber, tasks); 
                     tasks.get(taskNumber -1).unmark();
                     System.out.println("Nice! I've marked this task as not done yet:");
                     System.out.println("    "+tasks.get(taskNumber -1).print());
+                } catch (NumberFormatException e){
+                    System.out.println("Task number must be a number");
+
+                } catch (FeiException e){
+                    System.out.println(e.getMessage());
+                }
+            }
+            else if (userInput.startsWith("delete ")){
+                try {
+                    String[] parts = userInput.split(" ");
+                    if (parts.length < 2) {
+                        throw new FeiException("Must follow this format: \ndelete <valid number>");
+                    }
+                    int taskNumber = Integer.parseInt(parts[1]);
+                    validateMarkNumber(taskNumber, tasks); 
+                    System.out.println("Noted. I've removed this task:");
+                    System.out.println("    "+tasks.get(taskNumber-1).print());
+                    tasks.remove(taskNumber-1);
+                    System.out.println("Now you have "+ tasks.size() +" tasks in the list.");
+
+
                 } catch (NumberFormatException e){
                     System.out.println("Task number must be a number");
 

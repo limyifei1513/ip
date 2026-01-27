@@ -16,4 +16,11 @@ deadline do homework
 event 
 event do homework
 event do homework /from 2pm
+delete 3
+delete 10
+delete -1
+list
+mark 
+unmark 
+delete 
 bye

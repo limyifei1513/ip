@@ -56,4 +56,25 @@ event <description> /from <date> /to <date>
 Must follow this format: 
 event <description> /from <date> /to <date>
 
+Noted. I've removed this task:
+    [E][ ] project meeting (from: Mon 2pm to: 4pm)
+Now you have 3 tasks in the list.
+
+That task number is out of range.
+
+That task number is out of range.
+
+1. [T][ ] borrow book
+2. [D][X] return book (by: Sunday)
+3. [D][ ] do homework (by: no idea :-p)
+
+Must follow this format: 
+mark <valid number>
+
+Must follow this format: 
+unmark <valid number>
+
+Must follow this format: 
+delete <valid number>
+
 Bye. Hope to see you again soon!
