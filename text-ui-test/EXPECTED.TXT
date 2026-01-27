@@ -35,4 +35,25 @@ Nice! I've marked this task as not done yet:
 3. [E][ ] project meeting (from: Mon 2pm to: 4pm)
 4. [D][ ] do homework (by: no idea :-p)
 
+Task number must be a number
+
+That task number is out of range.
+
+That task number is out of range.
+
+A/An todo must have a description.
+
+A/An deadline must have a description.
+
+Must follow this format: 
+deadline <description> /by <date>
+
+A/An event must have a description.
+
+Must follow this format: 
+event <description> /from <date> /to <date>
+
+Must follow this format: 
+event <description> /from <date> /to <date>
+
 Bye. Hope to see you again soon!

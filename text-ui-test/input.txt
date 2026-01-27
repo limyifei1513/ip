@@ -7,4 +7,13 @@ mark 2
 mark 4
 unmark 4
 list
+mark test
+mark 6
+mark -1
+todo 
+deadline 
+deadline do homework
+event 
+event do homework
+event do homework /from 2pm
 bye
