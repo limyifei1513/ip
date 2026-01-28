@@ -165,7 +165,7 @@ public class Fei {
             }
 
             else{
-                System.out.println("please enter a valid command");
+                System.out.println("please enter a valid command"); 
             }
 
             System.out.println("");
