@@ -1,3 +1,8 @@
+package fei;
+
+/**
+ * Represents an event task with a description, the start time and end time
+ */
 public class Event extends Task {
 
     protected String from;
@@ -18,4 +23,9 @@ public class Event extends Task {
     public String print() {
         return "[E]" + super.print() + " (from: " + from + " to: " + to +")";
     }
+
+    @Override
+    public String toFileString() {
+        return "E // " + super.toFileString() + " // " + from + " // " + to + System.lineSeparator();
+    }      
 }
