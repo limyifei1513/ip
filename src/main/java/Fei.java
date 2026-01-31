@@ -1,17 +1,24 @@
 import java.util.Scanner;
 import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 public class Fei {
 
-    public void sayHi(){
-        System.out.println("Hello! I'm Fei\nWhat can I do for you?");
+    public static void sayHi(){
+        System.out.println("\nHello! I'm Fei\nAbove is your previously saved list.\nWhat can I do for you?");
     }
 
-    public void sayBye(){
+    public static void sayBye(){
         System.out.println("Bye. Hope to see you again soon!");
     }
 
-    public void showList(ArrayList<Task> tasks){
+    public static void showList(ArrayList<Task> tasks){
         for (int i = 1; i <= tasks.size();i++){
             System.out.println(i +". " + tasks.get(i-1).print());
         }
@@ -38,21 +45,78 @@ public class Fei {
             throw new FeiException("Must follow this format: \nevent <description> /from <date> /to <date>");
         }
     }
+    private static String importFile(){
+        String fileAddress = System.getProperty("user.dir") + "/data.txt";
+        try {
+            if (!Files.exists(Paths.get(fileAddress))) {
+                Files.createFile(Paths.get(fileAddress));
+            }
+        } catch (IOException e) {
+            System.out.println("Failed to create file: " + e.getMessage());
+        }
+        return fileAddress;
+    }
 
+    private static void loadContents(String filePath, ArrayList<Task> tasks) throws FileNotFoundException {
+        File f = new File(filePath); // create a File for the given file path
+        Scanner s = new Scanner(f); // create a Scanner using the File as the source
+        while (s.hasNext()) {
+            String data = s.nextLine();
+            String[] dataParts = data.split(" // ");
+            Boolean isDone = Boolean.parseBoolean(dataParts[1]);
+            if (dataParts[0].equals("T")){
+                tasks.add(new Todo(dataParts[2],isDone));
+            }
+
+            else if (dataParts[0].equals("D")){
+                tasks.add(new Deadline(dataParts[2],dataParts[3],isDone));
+            }
+
+            else if (dataParts[0].equals("E")){
+                tasks.add(new Event(dataParts[2],dataParts[3],dataParts[4],isDone));
+            }
+
+            else{
+                System.out.println("File is corrupted, can't read the file");
+            }
+        }
+    }
+
+    private static void printConfirmation(ArrayList<Task> tasks){
+        System.out.println("Got it. I've added this task:");
+        int size = tasks.size();
+        System.out.println("    "+tasks.get(size-1).print());
+        System.out.println("Now you have "+ size +" tasks in the list.");
+    }
+    
+    private static void appendToFile(String filePath, String textToAppend) throws IOException {
+        FileWriter fw = new FileWriter(filePath, true);
+        fw.write(textToAppend);
+        fw.close();
+    }
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Fei fei = new Fei();
         ArrayList<Task> tasks = new ArrayList<>();
-        fei.sayHi();
+
+        String fileAddress;
+        fileAddress = importFile();
+        try {
+            loadContents(fileAddress,tasks);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found");
+        }
+
+        showList(tasks);
+        sayHi();
 
         while (true){
             String userInput = scanner.nextLine();
             if (userInput.equals("bye")){
-                fei.sayBye();
+                sayBye();
                 break;
             }
             else if (userInput.equals("list")){
-                fei.showList(tasks); 
+                showList(tasks); 
             }
 
             else if (userInput.startsWith("mark ")){
@@ -121,13 +185,13 @@ public class Fei {
                     String task = userInput.substring(5);
                     validateIfEmpty(task,"todo");
                     tasks.add(new Todo(task));
-                    System.out.println("Got it. I've added this task:");
-                    int size = tasks.size();
-                    System.out.println("    "+tasks.get(size-1).print());
-                    System.out.println("Now you have "+ size +" tasks in the list.");
+                    appendToFile(fileAddress, "T | 0 | read book" + System.lineSeparator());
+                    printConfirmation(tasks);
                 } catch (FeiException e){
                     System.out.println(e.getMessage());
-                }
+                } catch (IOException e) {
+                    System.out.println("Something went wrong: " + e.getMessage());
+                    }
             }
 
             else if (userInput.startsWith("deadline ")){
@@ -137,10 +201,7 @@ public class Fei {
                     String[] parts = task.split(" /by ");
                     validateDeadline(parts);
                     tasks.add(new Deadline(parts[0],parts[1]));
-                    System.out.println("Got it. I've added this task:");
-                    int size = tasks.size();
-                    System.out.println("    "+tasks.get(size-1).print());
-                    System.out.println("Now you have "+ size +" tasks in the list.");
+                    printConfirmation(tasks);
                 } catch (FeiException e){
                     System.out.println(e.getMessage());
                 }
@@ -155,10 +216,7 @@ public class Fei {
                     String[] from_to = parts[1].split(" /to ");
                     validateEvent(from_to);
                     tasks.add(new Event(parts[0],from_to[0],from_to[1]));
-                    System.out.println("Got it. I've added this task:");
-                    int size = tasks.size();
-                    System.out.println("    "+tasks.get(size-1).print());
-                    System.out.println("Now you have "+ size +" tasks in the list.");
+                    printConfirmation(tasks);   
                 } catch (FeiException e){
                     System.out.println(e.getMessage());
                 }

@@ -7,6 +7,17 @@ public class Task {
         done = "[ ] ";
     }
 
+    public Task(String name, Boolean isDone) {
+        this.name = name;
+
+        if (isDone){
+            this.mark();
+        }
+        else{
+            this.done = "[ ] ";
+        }
+    }
+
     public String print() {
         return done + name;
     }
