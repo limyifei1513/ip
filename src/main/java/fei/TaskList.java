@@ -7,7 +7,7 @@ public class TaskList {
 
     ArrayList<Task> tasks;
 
-    public TaskList  (){
+    public TaskList() {
         this.tasks = new ArrayList<Task>();
     }
 
@@ -32,11 +32,11 @@ public class TaskList {
         return tasks;
     }
 
-    void remove (int index){
+    void remove (int index) {
         tasks.remove(index);
     }
 
-    void add (Task task){
+    void add (Task task) {
         tasks.add(task);
     }
 }
