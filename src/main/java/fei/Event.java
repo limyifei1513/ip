@@ -41,17 +41,6 @@ public class Event extends Task {
         }
     }
 
-    /**
-     * Creates an event with the given description, start date, end date,
-     * and completion status.
-     * Attempts to parse the start and end dates in {@code yyyy-MM-dd} format.
-     * If parsing fails, the original date strings are stored instead.
-     *
-     * @param description Description of the event.
-     * @param from        Start date of the event.
-     * @param to          End date of the event.
-     * @param isDone      Whether the event is marked as completed.
-     */
     public Event(String description, String from, String to, Boolean isDone) {
         super(description, isDone);
         try {
@@ -67,6 +56,13 @@ public class Event extends Task {
         }
     }
 
+    /**
+     * Returns the formatted start date of the event.
+     * If the date was parsed successfully, it is returned in {@code MMM dd yyyy}
+     * format; otherwise, the original input string is returned.
+     *
+     * @return Start date of the event.
+     */
     public String getFrom() {
         if (fromLocalDate != null) {
             return fromLocalDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
@@ -74,6 +70,13 @@ public class Event extends Task {
         return fromString;
     }
 
+    /**
+     * Returns the formatted end date of the event.
+     * If the date was parsed successfully, it is returned in {@code MMM dd yyyy}
+     * format; otherwise, the original input string is returned.
+     *
+     * @return End date of the event.
+     */
     public String getTo() {
         if (toLocalDate != null) {
             return toLocalDate.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
@@ -81,11 +84,21 @@ public class Event extends Task {
         return toString;
     }
 
+    /**
+     * Returns a user-facing string representation of the event.
+     *
+     * @return String representation of the event for display.
+     */
     @Override
     public String print() {
-        return "[E]" + super.print() + " (from: " + getFrom() + " to: " + getTo() +")";
+        return "[E]" + super.print() + " (from: " + getFrom() + " to: " + getTo() + ")";
     }
 
+    /**
+     * Returns a string representation of the event for file storage.
+     *
+     * @return File storage format of the event.
+     */
     @Override
     public String toFileString() {
         return "E // " + super.toFileString() + " // " + getFrom() + " // " + getTo() + System.lineSeparator();
