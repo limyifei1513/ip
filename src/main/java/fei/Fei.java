@@ -161,8 +161,17 @@ public class Fei {
                 } catch (IOException e) {
                     System.out.println("Something went wrong: " + e.getMessage());
                 }
+            } else if (userInput.startsWith("find ")) { 
+                String keyword = userInput.substring(6);
+                TaskList foundTasks = tasks.find(keyword);
+                if (foundTasks.getSize() == 0) {
+                    System.out.println("No matching tasks found.");  
+                } else {
+                    System.out.println("     Here are the matching tasks in your list:");
+                    ui.showList(foundTasks); 
+                }
             } else {
-                System.out.println("please enter a valid command"); 
+                System.out.println("please enter a valid command");
             }
         }
     }

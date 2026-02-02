@@ -36,4 +36,8 @@ public class Task {
     public String toFileString() {
         return isDone + " // " + name;
     }
+
+    public String getName() {
+        return this.name;
+    }
 }
