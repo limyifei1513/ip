@@ -63,4 +63,14 @@ public class TaskList {
     void add (Task task) {
         tasks.add(task);
     }
+
+    TaskList find (String keyword) {
+        TaskList foundTasks = new TaskList();
+        for (Task task : tasks){
+            if ((task.getName().toLowerCase()).contains(keyword.toLowerCase())) {
+                foundTasks.add(task);
+            } 
+        }
+        return foundTasks;
+    }
 }
