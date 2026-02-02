@@ -1,5 +1,6 @@
 todo borrow book
 deadline return book /by Sunday
+deadline return book2 /by 2019-10-15
 event project meeting /from Mon 2pm /to 4pm
 deadline do homework /by no idea :-p
 list
