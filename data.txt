@@ -1,8 +1,5 @@
 T // false // abdf
 T // true // asdf
-D // false // do homework // 10 16 2019
 D // false // do avd // Oct 13 2018
-D // false // do ahew // sun
-D // false // basdf // sun
-E // false // do homework // Oct 13 2013 // Nov 23 2013
+D // true // do ahew // sun
 E // false // asdf // wed // tue

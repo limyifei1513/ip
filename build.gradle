@@ -2,6 +2,15 @@ plugins {
     id 'java'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '7.1.2'
+    id 'checkstyle'
+}
+
+checkstyle {
+    toolVersion = '11.0'  // or the version your course specifies
+    configFile = file('src/main/config/checkstyle/checkstyle.xml')
+    configProperties = [
+        'suppressionsFile': file('src/main/config/checkstyle/suppressions.xml')
+    ]
 }
 
 repositories {
