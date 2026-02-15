@@ -33,7 +33,7 @@ public class Parser {
     public void validateDeadlineFormat(String[] parts) throws FeiException {
         if (parts.length < 2) {
             throw new FeiException(
-                "Must follow this format:\ndeadline <description> /by <date>"
+                "Must follow this format:\ndeadline <description> /by <date> (Date Format: yyyy-mm-dd (e.g., 2019-10-15))"
             );
         }
     }
@@ -47,7 +47,7 @@ public class Parser {
     public void validateEventFormat(String[] parts) throws FeiException {
         if (parts.length < 2) {
             throw new FeiException(
-                "Must follow this format:\nevent <description> /from <date> /to <date>"
+                "Must follow this format:\nevent <description> /from <date> /to <date> (Date Format: yyyy-mm-dd (e.g., 2019-10-15))"
             );
         }
     }

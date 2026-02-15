@@ -5,15 +5,8 @@ public class Ui {
     /**
      * Prints the greeting message to the user.
      */
-    void sayHi() {
-        System.out.println("\nHello! I'm Fei\nAbove is your previously saved list.\nWhat can I do for you?");
-    }
-
-    /**
-     * Prints the goodbye message to the user.
-     */
-    void sayBye() {
-        System.out.println("Bye. Hope to see you again soon!");
+    public String sayHi() {
+        return ("\nHello! I'm Fei\nAbove is your previously saved list.\nWhat can I do for you?");
     }
 
     /**
@@ -21,10 +14,12 @@ public class Ui {
      *
      * @param tasks Task list to be printed.
      */
-    void showList(TaskList tasks) {
+    public String showList(TaskList tasks) {
+        String ans = "";
         for (int i = 1; i <= tasks.getSize(); i++) {
-            System.out.println(i + ". " + tasks.getTask(i - 1).print());
+            ans += i + ". " + tasks.getTask(i - 1).print() + "\n";
         }
+        return ans;
     }
 
     /**
@@ -32,15 +27,13 @@ public class Ui {
      *
      * @param tasks The list of tasks.
      */
-    void printConfirmation(TaskList tasks) {
+    public String printConfirmation(TaskList tasks) {
         int size = tasks.getSize();
-
-        System.out.println("Got it. I've added this task:");
-        System.out.println("    " + tasks.getTask(size - 1).print());
-        System.out.println("Now you have " + size + " tasks in the list.");
+        return ("Got it. I've added this task:\n" + "    " + tasks.getTask(size - 1).print()
+                + "\n" + "Now you have " + size + " tasks in the list.");
     }
 
-    void showLoadingError() {
-        System.out.println("File not found");
+    public String showLoadingError() {
+        return "File not found";
     }
 }

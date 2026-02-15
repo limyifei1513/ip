@@ -25,9 +25,6 @@ public class Deadline extends Task {
         } catch (DateTimeParseException e) {
             byString = by;
             byLocalDate = null;
-            System.out.println(
-                "Current date is not stored in Date format, you may enter your date in this format: "
-                    + "yyyy-mm-dd (e.g., 2019-10-15) if you wish");
         }
     }
 

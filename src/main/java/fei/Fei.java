@@ -44,135 +44,138 @@ public class Fei {
         }
     }
 
-    public void run(){
-        Scanner scanner = new Scanner(System.in);
-        ui.showList(tasks);
-        ui.sayHi();
+    // public String getGreeting() {
+    //     return ui.sayHi();
+    // }
+    public String getGreeting() {
+        return ui.sayHi(); 
+    }
 
-        while (true) {
-            System.out.println("");
-            String userInput = scanner.nextLine();
-            if (userInput.equals("bye")) {
-                ui.sayBye();
-                break;
-            } else if (userInput.equals("list")) {
-                ui.showList(tasks); 
-            } else if (userInput.startsWith("mark ")) {
-                try {
-                    String[] parts = userInput.split(" ");
-                    if (parts.length < 2) {
-                        throw new FeiException("Must follow this format: \nmark <valid number>");
-                    }
+    public String showSavedList() {
+        return ui.showList(tasks);
+    }
+    public String getResponse(String userInput) {
+        String printMsg = "";
+        if (userInput.equals("bye")) {
+            javafx.application.Platform.exit();
+            return "";
+        } else if (userInput.equals("list")) {
+            return ui.showList(tasks); 
+        } else if (userInput.startsWith("mark ")) {
+            try {
+                String[] parts = userInput.split(" ");
+                if (parts.length < 2) {
+                    throw new FeiException("Must follow this format: \nmark <valid number>");
+                }
 
-                    int taskNumber = Integer.parseInt(parts[1]); 
-                    parser.validateMarkNumber(taskNumber, tasks);
-                    tasks.getTask(taskNumber - 1).mark();
-                    storage.rewriteFile(tasks);
-                    System.out.println("Nice! I've marked this task as done:");
-                    System.out.println("    " + tasks.getTask(taskNumber -1).print());
-                } catch (NumberFormatException e) {
-                    System.out.println("Task number must be a number");
-                } catch (FeiException e) {
-                    System.out.println(e.getMessage());
-                } catch (IOException e) {
-                    System.out.println("Something went wrong: " + e.getMessage());
-                }
-            } else if (userInput.startsWith("unmark ")) {
-                try {
-                    String[] parts = userInput.split(" ");
-                    if (parts.length < 2) {
-                        throw new FeiException("Must follow this format: \nunmark <valid number>");
-                    }
-
-                    int taskNumber = Integer.parseInt(parts[1]);
-                    parser.validateMarkNumber(taskNumber, tasks); 
-                    tasks.getTask(taskNumber - 1).unmark();
-                    storage.rewriteFile(tasks);
-                    System.out.println("Nice! I've marked this task as not done yet:");
-                    System.out.println("    " + tasks.getTask(taskNumber - 1).print());
-                } catch (NumberFormatException e) {
-                    System.out.println("Task number must be a number");
-                } catch (FeiException e) {
-                    System.out.println(e.getMessage());
-                } catch (IOException e) {
-                    System.out.println("Something went wrong: " + e.getMessage());
-                }
-            } else if (userInput.startsWith("delete ")) {
-                try {
-                    String[] parts = userInput.split(" ");
-                    if (parts.length < 2) {
-                        throw new FeiException("Must follow this format: \ndelete <valid number>");
-                    }
-
-                    int taskNumber = Integer.parseInt(parts[1]);
-                    parser.validateMarkNumber(taskNumber, tasks); 
-
-                    System.out.println("Noted. I've removed this task:");
-                    System.out.println("    "+tasks.getTask(taskNumber - 1).print());
-                    tasks.remove(taskNumber - 1);
-                    storage.rewriteFile(tasks);
-                    System.out.println("Now you have " + tasks.getSize() + " tasks in the list.");
-                } catch (NumberFormatException e) {
-                    System.out.println("Task number must be a number");
-                } catch (FeiException e) {
-                    System.out.println(e.getMessage());
-                } catch (IOException e) {
-                    System.out.println("Something went wrong: " + e.getMessage());
-                }
-            } else if (userInput.startsWith("todo ")){
-                try{
-                    String task = userInput.substring(5);
-                    parser.validateNotEmpty(task, "todo");
-                    tasks.add(new Todo(task));
-                    storage.appendToFile(tasks.getTask(tasks.getSize() - 1).toFileString());
-                    ui.printConfirmation(tasks);
-                } catch (FeiException e) {
-                    System.out.println(e.getMessage());
-                } catch (IOException e) {
-                    System.out.println("Something went wrong: " + e.getMessage());
-                    }
-            } else if (userInput.startsWith("deadline ")) {
-                try{
-                    String task = userInput.substring(9);
-                    parser.validateNotEmpty(task, "deadline");
-                    String[] parts = task.split(" /by ");
-                    parser.validateDeadlineFormat(parts);
-                    tasks.add(new Deadline(parts[0], parts[1]));
-                    storage.appendToFile(tasks.getTask(tasks.getSize() - 1).toFileString());
-                    ui.printConfirmation(tasks);
-                } catch (FeiException e) {
-                    System.out.println(e.getMessage());
-                } catch (IOException e) {
-                    System.out.println("Something went wrong: " + e.getMessage());
-                }
-            } else if (userInput.startsWith("event ")) {
-                try{
-                    String task = userInput.substring(6);
-                    parser.validateNotEmpty(task, "event");
-                    String[] parts = task.split(" /from ");
-                    parser.validateEventFormat(parts);
-                    String[] from_to = parts[1].split(" /to ");
-                    parser.validateEventFormat(from_to);
-                    tasks.add(new Event(parts[0], from_to[0], from_to[1]));
-                    storage.appendToFile(tasks.getTask(tasks.getSize() - 1).toFileString());
-                    ui.printConfirmation(tasks);   
-                } catch (FeiException e) {
-                    System.out.println(e.getMessage());
-                } catch (IOException e) {
-                    System.out.println("Something went wrong: " + e.getMessage());
-                }
-            } else if (userInput.startsWith("find ")) { 
-                String keyword = userInput.substring(6);
-                TaskList foundTasks = tasks.find(keyword);
-                if (foundTasks.getSize() == 0) {
-                    System.out.println("No matching tasks found.");  
-                } else {
-                    System.out.println("     Here are the matching tasks in your list:");
-                    ui.showList(foundTasks); 
-                }
-            } else {
-                System.out.println("please enter a valid command");
+                int taskNumber = Integer.parseInt(parts[1]); 
+                parser.validateMarkNumber(taskNumber, tasks);
+                tasks.getTask(taskNumber - 1).mark();
+                storage.rewriteFile(tasks);
+                return ("Nice! I've marked this task as done:\n"
+                        + "    " + tasks.getTask(taskNumber -1).print());
+            } catch (NumberFormatException e) {
+                return "Task number must be a number";
+            } catch (FeiException e) {
+                return e.getMessage();
+            } catch (IOException e) {
+                return "Something went wrong: " + e.getMessage();
             }
+        } else if (userInput.startsWith("unmark ")) {
+            try {
+                String[] parts = userInput.split(" ");
+                if (parts.length < 2) {
+                    throw new FeiException("Must follow this format: \nunmark <valid number>");
+                }
+
+                int taskNumber = Integer.parseInt(parts[1]);
+                parser.validateMarkNumber(taskNumber, tasks); 
+                tasks.getTask(taskNumber - 1).unmark();
+                storage.rewriteFile(tasks);
+                return "Nice! I've marked this task as not done yet:\n"
+                        + "    " + tasks.getTask(taskNumber - 1).print();
+            } catch (NumberFormatException e) {
+                return "Task number must be a number";
+            } catch (FeiException e) {
+                return e.getMessage();
+            } catch (IOException e) {
+                return "Something went wrong: " + e.getMessage();
+            }
+        } else if (userInput.startsWith("delete ")) {
+            try {
+                String[] parts = userInput.split(" ");
+                if (parts.length < 2) {
+                    throw new FeiException("Must follow this format: \ndelete <valid number>");
+                }
+
+                int taskNumber = Integer.parseInt(parts[1]);
+                parser.validateMarkNumber(taskNumber, tasks); 
+                printMsg += "Noted. I've removed this task:\n" 
+                        + "    " + tasks.getTask(taskNumber - 1).print();
+                tasks.remove(taskNumber - 1);
+                storage.rewriteFile(tasks);
+                printMsg += "Now you have " + tasks.getSize() + " tasks in the list.";
+                return printMsg;
+            } catch (NumberFormatException e) {
+                return "Task number must be a number";
+            } catch (FeiException e) {
+                return e.getMessage();
+            } catch (IOException e) {
+                return ("Something went wrong: " + e.getMessage());
+            }
+        } else if (userInput.startsWith("todo ")){
+            try{
+                String task = userInput.substring(5);
+                parser.validateNotEmpty(task, "todo");
+                tasks.add(new Todo(task));
+                storage.appendToFile(tasks.getTask(tasks.getSize() - 1).toFileString());
+                return ui.printConfirmation(tasks);
+            } catch (FeiException e) {
+                return (e.getMessage());
+            } catch (IOException e) {
+                return ("Something went wrong: " + e.getMessage());
+                }
+        } else if (userInput.startsWith("deadline ")) {
+            try{
+                String task = userInput.substring(9);
+                parser.validateNotEmpty(task, "deadline");
+                String[] parts = task.split(" /by ");
+                parser.validateDeadlineFormat(parts);
+                tasks.add(new Deadline(parts[0], parts[1]));
+                storage.appendToFile(tasks.getTask(tasks.getSize() - 1).toFileString());
+                return ui.printConfirmation(tasks);
+            } catch (FeiException e) {
+                return (e.getMessage());
+            } catch (IOException e) {
+                return ("Something went wrong: " + e.getMessage());
+            }
+        } else if (userInput.startsWith("event ")) {
+            try{
+                String task = userInput.substring(6);
+                parser.validateNotEmpty(task, "event");
+                String[] parts = task.split(" /from ");
+                parser.validateEventFormat(parts);
+                String[] from_to = parts[1].split(" /to ");
+                parser.validateEventFormat(from_to);
+                tasks.add(new Event(parts[0], from_to[0], from_to[1]));
+                storage.appendToFile(tasks.getTask(tasks.getSize() - 1).toFileString());
+                return ui.printConfirmation(tasks);   
+            } catch (FeiException e) {
+                return (e.getMessage());
+            } catch (IOException e) {
+                return ("Something went wrong: " + e.getMessage());
+            }
+        } else if (userInput.startsWith("find ")) { 
+            String keyword = userInput.substring(6);
+            TaskList foundTasks = tasks.find(keyword);
+            if (foundTasks.getSize() == 0) {
+                return ("No matching tasks found.");  
+            } else {
+                return ("     Here are the matching tasks in your list:\n"
+                        + ui.showList(foundTasks));
+            }
+        } else {
+            return ("please enter a valid command");
         }
     }
 
@@ -182,7 +185,6 @@ public class Fei {
      * @param args Command line arguments.
      */
     public static void main(String[] args) {
-        String filePath = getFilePath();
-        new Fei(filePath).run();
+        System.out.println("start");
     }
 }
