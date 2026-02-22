@@ -90,7 +90,6 @@ public class Fei {
                 if (parts.length < 2) {
                     throw new FeiException("Must follow this format: \nunmark <valid number>");
                 }
-
                 int taskNumber = Integer.parseInt(parts[1]);
                 parser.validateMarkNumber(taskNumber, tasks); 
                 tasks.getTask(taskNumber - 1).unmark();
@@ -110,7 +109,6 @@ public class Fei {
                 if (parts.length < 2) {
                     throw new FeiException("Must follow this format: \ndelete <valid number>");
                 }
-
                 int taskNumber = Integer.parseInt(parts[1]);
                 parser.validateMarkNumber(taskNumber, tasks); 
                 printMsg += "Noted. I've removed this task:\n" 
