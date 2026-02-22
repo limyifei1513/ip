@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Scanner;
 
 /**
  * Runs the Fei task manager application.
@@ -36,6 +35,10 @@ public class Fei {
         ui = new Ui();
         storage = new Storage(filePath);
         parser = new Parser();
+
+        assert ui != null : "Ui must be initialised";
+        assert storage != null : "Storage must be initialised";
+        assert parser != null : "Parser must be initialised";
         try {
             tasks = storage.loadContents();
         } catch (FileNotFoundException e) {
@@ -139,6 +142,7 @@ public class Fei {
                 parser.validateNotEmpty(task, "deadline");
                 String[] parts = task.split(" /by ");
                 parser.validateDeadlineFormat(parts);
+                assert parts.length == 2 : "validateDeadlineFormat should ensure exactly 2 parts";
                 tasks.add(new Deadline(parts[0], parts[1]));
                 storage.appendToFile(tasks.getTask(tasks.getSize() - 1).toFileString());
                 return ui.printConfirmation(tasks);
@@ -153,8 +157,10 @@ public class Fei {
                 parser.validateNotEmpty(task, "event");
                 String[] parts = task.split(" /from ");
                 parser.validateEventFormat(parts);
+                assert parts.length == 2 : "validateEventFormat should ensure exactly 2 parts";
                 String[] from_to = parts[1].split(" /to ");
                 parser.validateEventFormat(from_to);
+                assert from_to.length == 2 : "validateEventFormat should ensure exactly 2 parts (/to)";
                 tasks.add(new Event(parts[0], from_to[0], from_to[1]));
                 storage.appendToFile(tasks.getTask(tasks.getSize() - 1).toFileString());
                 return ui.printConfirmation(tasks);   
