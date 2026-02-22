@@ -51,7 +51,7 @@ public class DialogBox extends HBox {
     /**
      * Visually highlights the dialog text (useful for warnings/errors/important messages).
      */
-    public void highlight() {
+    public void errorDialogStyle() {
         // Highlight the label like a "pill" with a colored background and border.
         dialog.setStyle(
                 "-fx-background-color: #ffcdcd;" +
@@ -62,13 +62,38 @@ public class DialogBox extends HBox {
         );
     }
 
+    public void feiDialogStyle() {
+        dialog.setStyle(
+                "-fx-background-color: #90feef;" +
+                "-fx-background-radius: 8;" +
+                "-fx-border-color: #0066ff;" +
+                "-fx-border-radius: 8;" +
+                "-fx-padding: 6 10 6 10;"
+        );
+    }
+
+    public void userDialogStyle() {
+        dialog.setStyle(
+                "-fx-background-color: #42ffc0;" +
+                "-fx-background-radius: 8;" +
+                "-fx-border-color: #33ff63;" +
+                "-fx-border-radius: 8;" +
+                "-fx-padding: 6 10 6 10;"
+        );
+    }
+
     public static DialogBox getUserDialog(String text, Image img) {
-        return new DialogBox(text, img);
+        var db = new DialogBox(text, img);
+        db.userDialogStyle();
+        return db;
     }
 
     public static DialogBox getFeiDialog(String text, Image img) {
         var db = new DialogBox(text, img);
         db.flip();
+        db.feiDialogStyle();
         return db;
     }
+
+    
 }

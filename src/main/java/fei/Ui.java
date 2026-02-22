@@ -6,7 +6,7 @@ public class Ui {
      * Prints the greeting message to the user.
      */
     public String sayHi() {
-        return ("\nHello! I'm Fei\nAbove is your previously saved list.\nWhat can I do for you?");
+        return ("Hello! I'm Fei\nBelow is your previously saved list.\nWhat can I do for you?");
     }
 
     /**
