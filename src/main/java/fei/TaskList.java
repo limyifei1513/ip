@@ -64,12 +64,16 @@ public class TaskList {
         tasks.add(task);
     }
 
-    TaskList find (String keyword) {
+    TaskList find (String[] keywords) {
         TaskList foundTasks = new TaskList();
         for (Task task : tasks){
-            if ((task.getName().toLowerCase()).contains(keyword.toLowerCase())) {
-                foundTasks.add(task);
-            } 
+            String name = task.getName().toLowerCase();
+            for (String k : keywords) {
+                if (name.contains(k.toLowerCase())) {
+                    foundTasks.add(task);
+                    break;
+                }
+            }
         }
         return foundTasks;
     }

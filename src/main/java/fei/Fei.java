@@ -170,8 +170,8 @@ public class Fei {
                 return ("Something went wrong: " + e.getMessage());
             }
         } else if (userInput.startsWith("find ")) { 
-            String keyword = userInput.substring(6);
-            TaskList foundTasks = tasks.find(keyword);
+            String[] keywords = userInput.substring(5).trim().split("\\s+");
+            TaskList foundTasks = tasks.find(keywords);
             if (foundTasks.getSize() == 0) {
                 return ("No matching tasks found.");  
             } else {
