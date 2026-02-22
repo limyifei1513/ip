@@ -57,6 +57,12 @@ public class Fei {
     public String showSavedList() {
         return ui.showList(tasks);
     }
+    /**
+     * Processes a single user command and returns Fei's response.
+     * 
+     * @param userInput raw user command
+     * @return response message to be displayed in UI
+     */
     public String getResponse(String userInput) {
         String printMsg = "";
         if (userInput.equals("bye")) {
@@ -172,11 +178,12 @@ public class Fei {
         } else if (userInput.startsWith("find ")) { 
             String[] keywords = userInput.substring(5).trim().split("\\s+");
             TaskList foundTasks = tasks.find(keywords);
+            int count = foundTasks.getSize();
             if (foundTasks.getSize() == 0) {
                 return ("No matching tasks found.");  
             } else {
-                return ("     Here are the matching tasks in your list:\n"
-                        + ui.showList(foundTasks));
+            return "Here are " + count + " matching task(s):\n"
+                    + ui.showList(foundTasks);
             }
         } else {
             return ("please enter a valid command");
