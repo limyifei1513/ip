@@ -48,6 +48,20 @@ public class DialogBox extends HBox {
         setAlignment(Pos.TOP_LEFT);
     }
 
+    /**
+     * Visually highlights the dialog text (useful for warnings/errors/important messages).
+     */
+    public void highlight() {
+        // Highlight the label like a "pill" with a colored background and border.
+        dialog.setStyle(
+                "-fx-background-color: #ffcdcd;" +
+                "-fx-background-radius: 8;" +
+                "-fx-border-color: #ff0000;" +
+                "-fx-border-radius: 8;" +
+                "-fx-padding: 6 10 6 10;"
+        );
+    }
+
     public static DialogBox getUserDialog(String text, Image img) {
         return new DialogBox(text, img);
     }
