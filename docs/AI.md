@@ -10,7 +10,7 @@ AI tools were used in this project to assist with documentation, debugging, and 
 
 ### 1. Documentation Assistance
 AI was used to:
-- Improve and refine JavaDoc comments (the comment blocks before methods)
+- Improve and refine JavaDoc comments
 - Ensure comments clearly describe method responsibilities
 - Improve clarity and professionalism of documentation
 
